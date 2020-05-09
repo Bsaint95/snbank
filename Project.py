@@ -24,6 +24,7 @@ def first_level_selection():
 
 
 def second_level_selection():
+    session = open('session.txt', 'w+')
     print('Please select from 1-3 below')
     print(f' 1. Create New Bank Account\n'
           f' 2. Check Account Details\n'
@@ -42,6 +43,8 @@ def second_level_selection():
 
 
 def create_new_account():
+    customer = open('customer.txt', 'a+')
+    
     acctName = input('Enter Account Name: ')
     acctType = input('Enter Account Type: ')
     openbal = int(input('Enter Opening Balance: '))
@@ -57,10 +60,12 @@ def create_new_account():
         'Account Email': acctemail,
         'Account Number': acctno
     }
-    customers_list.append(customer_details)
-
-    customer = open('customer.txt', 'a+')
-    json.dump(customer_details, customer)
+    customer.write(f'Account Name: {acctName},'
+                   f'Account Type: {acctType},'
+                   f'Opening Balance: {openbal},'
+                   f'Account Email: {acctemail},'
+                   f'Account Number: {acctno}')
+    customer.write('\n')
     customer.close()
     second_level_selection()
 
@@ -68,13 +73,12 @@ def create_new_account():
 def account_details():
     account_number = input('Please input the account number you wish to query: ')
     customer = open('customer.txt', 'r+')
-    customers = json.load(customer)
-    for detail in customers:
+    for detail in customer:
         if account_number in detail:
             print(detail)
-    else:
-        print('Data not found')
-        return login()
+        else:
+            print('Data not found')
+            return login()
     
     customer.close()
     
