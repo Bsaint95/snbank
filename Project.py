@@ -3,9 +3,6 @@ import string
 import json
 
 
-customers_list = []
-
-
 def first_level_selection():
     print('Please select from 1-2 below')
     print(f' 1. Staff Login\n'
